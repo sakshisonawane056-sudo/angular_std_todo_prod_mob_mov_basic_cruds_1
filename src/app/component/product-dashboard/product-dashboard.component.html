@@ -1,0 +1,231 @@
+<div class="row justify-content-center">
+    <div class="col-md-6 mb-5">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                     <h1 class="font-weight-bold">{{isInEditMode ? 'Update Product' : 'Add Product'}}</h1>
+                </div>
+
+                <div class="card-body">
+                    <form #productForm="ngForm"
+                          >
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>Product Name *</label>
+                                <input
+                                    #productNameRef
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Enter product name"
+                                    name="productName"
+                                    required
+                                    >
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label>Brand *</label>
+                                <input
+                                    #brandRef
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Enter brand"
+                                    name="brand"
+                                    required
+                                    >
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Category *</label>
+                                <select
+                                    #categoryRef
+                                    class="form-control"
+                                    name="category"
+                                    required>
+
+                                    <option value="">Select Category</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="Clothing">Clothing</option>
+                                    <option value="Footwear">Footwear</option>
+                                    <option value="Furniture">Furniture</option>
+                                    <option value="Photography">Photography</option>
+                                    <option value="Fashion">Fashion</option>
+                                    <option value="Home & Kitchen">Home & Kitchen</option>
+                                    <option value="Computer Accessories">Computer Accessories</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Price *</label>
+                                <input
+                                    #priceRef
+                                    type="number"
+                                    class="form-control"
+                                    placeholder="Enter price"
+                                    name="price"
+                                    min="1"
+                                    required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Discount (%)</label>
+                                <input
+                                    #discountRef
+                                    type="number"
+                                    class="form-control"
+                                    placeholder="Enter discount"
+                                    name="discount"
+                                    min="0"
+                                    max="100">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Quantity *</label>
+                                <input
+                                    #quantityRef
+                                    type="number"
+                                    class="form-control"
+                                    placeholder="Enter quantity"
+                                    name="quantity"
+                                    min="0"
+                                    required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Color</label>
+                                <input
+                                    #colorRef
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Enter color"
+                                    name="color">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Rating</label>
+                                <input
+                                    #ratingRef
+                                    type="number"
+                                    class="form-control"
+                                    placeholder="Enter rating"
+                                    name="rating"
+                                    min="0"
+                                    max="5"
+                                    step="0.1">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Image URL *</label>
+                                <input
+                                    #imageUrlRef
+                                    type="url"
+                                    class="form-control"
+                                    placeholder="Enter image URL"
+                                    name="imageUrl"
+                                    required>
+                            </div>
+                            
+                            <div class="col-md-3 mb-3">
+                                <label class="d-block">Available</label>
+                                <div class="form-check">
+                                    <input
+                                        #descriptionRef
+                                        type="checkbox"
+                                        class="form-check-input"
+                                        name="isAvailable"
+                                       >
+                                    <label class="form-check-label">
+                                        Is Available
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label>Description *</label>
+                                <textarea
+                                    #isAvailableRef
+                                    class="form-control"
+                                    rows="2"
+                                    placeholder="Enter product description"
+                                    name="description"
+                                    required>
+                                </textarea>
+                            </div>
+
+                        </div>
+                        <hr>
+
+                        <div class="d-flex justify-content-between">
+                            <button
+                            type="button"
+                            (click)="onProductAdd()"
+                            class="w-100" 
+                            *ngIf="!isInEditMode"
+                            mat-raised-button color="primary">
+                                Add Product
+                            </button>
+
+                            <button
+                             type="button"
+                            (click)="onProductUpdate()"
+                            class="ml-2 w-100"
+                            *ngIf="isInEditMode" 
+                            mat-raised-button color="warn" >
+                                Update Product
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 col-sm-6 mb-4" *ngFor="let product of products">
+        <mat-card class="h-100 product-card">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>{{product.productName}}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image [src]="product.imageUrl" [alt]="product.productName" [title]="product.productName" class="product-img">
+            <mat-card-content class="product-content">
+                <p class="text-muted">
+                {{product.description}}
+                </p>
+                <h5 class="text-primary font-weight-bold">
+                        ₹{{product.price}}
+                </h5>
+
+                <p class="mb-1">
+                    <strong>Category:</strong> {{product.category}}
+                </p>
+                <p class="mb-1">
+                    <strong>Rating:</strong> {{product.rating}}
+                </p>
+
+                <p class="mb-1">
+                    <strong>Quantity:</strong> {{product.quantity}}
+                </p>
+
+                <span
+                    class="badge"
+                    [ngClass]="product.isAvailable ? 'badge-success' : 'badge-danger'">
+                    {{product.isAvailable ? 'Available' : 'Out of Stock'}}
+                </span>
+            </mat-card-content>
+            <mat-divider inset></mat-divider>
+            <mat-card-actions class="d-flex justify-content-between mt-auto">
+                <button 
+                (click)="onProductEdit(product)"
+                mat-raised-button color="primary"><i class="fa fa-edit mr-1"></i>
+                 Edit</button>
+                <button 
+                (click)="onProductDelete(product.prodId)"
+                mat-raised-button color="warn"><i class="fa fa-trash mr-1"></i>
+                 Remove</button>
+            </mat-card-actions>
+        </mat-card>
+        
+    </div>
+</div>
+
